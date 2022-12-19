@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "used-bookstore-react-native",
+    "slug": "used-bookstore-react-native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
