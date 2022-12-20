@@ -1,18 +1,33 @@
 import * as S from './styles'
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 
 export function Footer(){
+    const navigation = useNavigation();
+
+    const companyInfoList = [
+        {id: 1, type: "FAQ"},
+        {id: 2, type: "Sobre nós"},
+        {id: 3, type: "Onde estamos"},
+        {id: 4, type: "Entregas e devoluções"},
+        {id: 5, type: "Termos e condições"},
+        {id: 6, type: "Política de Cookies"},
+    ]
+
     return(
         <S.Container>
 
             <S.Title>Informações</S.Title>
-            <S.DB><S.Description>FAQ</S.Description></S.DB>
-            <S.DB><S.Description>Sobre nós</S.Description></S.DB>
-            <S.DB><S.Description>Onde estamos</S.Description></S.DB>
-            <S.DB><S.Description>Entregas e devoluções</S.Description></S.DB>
-            <S.DB><S.Description>Termos e condições</S.Description></S.DB>
-            <S.DB><S.Description>Política de Cookies</S.Description></S.DB>
-
+            {companyInfoList.map(item => {
+                return (
+                    <S.DB
+                        key={item.id}
+                        onPress={() => navigation.navigate('CompanyInfo', {info: item.type})}
+                    >
+                        <S.Description>{item.type}</S.Description>
+                    </S.DB>
+                )
+            })}
 
             <S.Spacer />
 

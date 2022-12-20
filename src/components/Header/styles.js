@@ -18,6 +18,13 @@ export const IconsAndTitle = styled.View`
     flex-direction: row;
 `;
 
+export const IconBox = styled.View`
+    background-color: #FBEFE3;
+    padding: 5px;
+    margin-right: 10px;
+    border-radius: 15px;
+`;
+
 export const TitleWrapper = styled.View``;
 
 export const Title = styled.Text`

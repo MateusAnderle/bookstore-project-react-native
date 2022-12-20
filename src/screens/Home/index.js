@@ -4,6 +4,7 @@ import * as S from './styles'
 import { BookData } from '../../utils/booksData';
 import Banner from '../../assets/capa.png'
 import { Footer } from '../../components/Footer';
+import { BooksListCategory } from '../../components/BooksListCategory';
 
 export function Home() {
   return (
@@ -11,103 +12,14 @@ export function Home() {
       <Header />
 
       <S.Content showsVerticalScrollIndicator={false}>
-          <S.Banner source={Banner} />
+        <S.Banner source={Banner} />
 
-        <S.Title>Mais vendidos</S.Title>
-
-        <S.BooksList
-          data={BookData}
-          horizontal
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return(
-              <S.BookBox>
-                <S.BookImage source={item.image}/>
-                <S.BookTitle>{item.livro}</S.BookTitle>
-                <S.BookAuthor>{item.autor}</S.BookAuthor>
-                <S.BookPrice>R$ {item.preco}</S.BookPrice>
-              </S.BookBox>
-            )
-          }}
-        />
-
-        <S.Title>Lançamentos</S.Title>
-
-        <S.BooksList
-          data={BookData}
-          horizontal
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return(
-              <S.BookBox>
-                <S.BookImage source={item.image}/>
-                <S.BookTitle>{item.livro}</S.BookTitle>
-                <S.BookAuthor>{item.autor}</S.BookAuthor>
-                <S.BookPrice>R$ {item.preco}</S.BookPrice>
-              </S.BookBox>
-            )
-          }}
-        />
-
-        <S.Title>Livros</S.Title>
-
-        <S.BooksList
-          data={BookData}
-          horizontal
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return(
-              <S.BookBox>
-                <S.BookImage source={item.image}/>
-                <S.BookTitle>{item.livro}</S.BookTitle>
-                <S.BookAuthor>{item.autor}</S.BookAuthor>
-                <S.BookPrice>R$ {item.preco}</S.BookPrice>
-              </S.BookBox>
-            )
-          }}
-        />
-
-        <S.Title>Decorações</S.Title>
-
-        <S.BooksList
-          data={BookData}
-          horizontal
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return(
-              <S.BookBox>
-                <S.BookImage source={item.image}/>
-                <S.BookTitle>{item.livro}</S.BookTitle>
-                <S.BookAuthor>{item.autor}</S.BookAuthor>
-                <S.BookPrice>R$ {item.preco}</S.BookPrice>
-              </S.BookBox>
-            )
-          }}
-        />
-
-        <S.Title>Educativo</S.Title>
-
-        <S.BooksList
-          data={BookData}
-          horizontal
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => {
-            return(
-              <S.BookBox>
-                <S.BookImage source={item.image}/>
-                <S.BookTitle>{item.livro}</S.BookTitle>
-                <S.BookAuthor>{item.autor}</S.BookAuthor>
-                <S.BookPrice>R$ {item.preco}</S.BookPrice>
-              </S.BookBox>
-            )
-          }}
-        />
-
+        <BooksListCategory title="Mais vendidos" category={BookData}/>
+        <BooksListCategory title="Lançamentos" category={BookData}/>
+        <BooksListCategory title="Livros" category={BookData}/>
+        <BooksListCategory title="Decorações" category={BookData}/>
+        <BooksListCategory title="Educativos" category={BookData}/>
+        
         <Footer/>
       </S.Content>
     </S.Container>

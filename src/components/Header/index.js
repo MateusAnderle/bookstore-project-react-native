@@ -3,10 +3,11 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { StatusBar } from 'react-native'; 
-
+import { useNavigation } from '@react-navigation/native';
 
 export function Header(){
     const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
+    const navigation = useNavigation();
     const CategoryList = ['Mais Vendidos', 'Lançamentos', 'Livros', 'Decorações', 'Educativo']
 
     function closeAndSearch (){
@@ -18,7 +19,10 @@ export function Header(){
             <StatusBar backgroundColor="#BF0A0D" barStyle="light-content"  />
             <S.ContentContainer>
                 <S.IconsAndTitle>
-                <AntDesign name="book" size={45} style={{color: '#000', backgroundColor: '#FBEFE3', borderRadius: 15, padding: 5, marginRight: 10}}/>
+                    <S.IconBox>
+                        <AntDesign name="book" size={45} color="#000"/>
+                    </S.IconBox>
+                    
                     <S.TitleWrapper>
                         <S.Title>Sebus</S.Title>
                         <S.Description>Novos e usados</S.Description>
@@ -34,7 +38,7 @@ export function Header(){
                         <Ionicons name="cart-outline" size={30} color="#FBEFE3" style={{marginRight: 5}}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                         <Ionicons name="person-circle-outline" size={30} color="#FBEFE3" /> 
                     </TouchableOpacity>
                 </S.EndIcons>
@@ -55,7 +59,10 @@ export function Header(){
                 data={CategoryList}
                 renderItem={({item}) => {
                     return (
-                        <S.CategoryButton>
+                        <S.CategoryButton 
+                            onPress={() => navigation.navigate('Categories', {
+                                category: item
+                        })}>
                             <S.CategoryItem>{item}</S.CategoryItem>
                         </S.CategoryButton>
                     )

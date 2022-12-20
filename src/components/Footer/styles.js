@@ -23,9 +23,7 @@ export const Title = styled.Text`
     color: #fff;
 `;
 
-export const DB = styled.TouchableOpacity`
-    margin-top: 10px;
-`;
+export const DB = styled.TouchableOpacity``;
 
 export const Phone = styled.Text`
     margin-top: 20px;
@@ -35,7 +33,7 @@ export const Phone = styled.Text`
 `;
 
 export const Description = styled.Text`
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 16px;
     color: #fff;
 `;
