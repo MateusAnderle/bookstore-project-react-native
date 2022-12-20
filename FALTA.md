@@ -1,7 +1,9 @@
 ROTAS / PAGINAS
-[] pagina do carrinho
-[] pagina de resumo + cep + forma de pagamento
-[] página de sucesso da compra
+[] pagina do carrinho (Fazer funcionalidades)
+[] pagina de resumo + cep + forma de pagamento (Fazer funcionalidades)
+[] toast ao adicionar produto no carrinho
+[] bolinha de notificacao no carrinho (Header)
+[] global context / async storage
 
 [] Criar formulário React Hook Form no cadastro e enviar para API
 

@@ -1,0 +1,48 @@
+import styled from "styled-components/native";
+
+export const Container = styled.View`
+    flex: 1;
+    background-color: #EFEFEF;
+    align-items: center;
+`;
+
+export const ScrollRegister = styled.ScrollView`
+    flex: 1;
+    width: 100%;
+`;
+
+export const Content = styled.View`
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #FFF;
+    align-items: center;
+`;
+
+export const Title = styled.Text`
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+`;
+
+export const Description = styled.Text`
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+`;
+
+
+export const LoginButton = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    width: 100%;
+    background-color: #DDD;
+    border-radius: 10px;
+`;
+
+export const LoginButtonText = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+`;

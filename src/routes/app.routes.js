@@ -7,6 +7,9 @@ import { ProductDetail } from '../screens/ProductDetail';
 import { Login } from '../screens/Login';
 import { Register } from '../screens/Register';
 import { SuccessRegister } from '../screens/SuccessRegister';
+import { Cart } from '../screens/CartPath/Cart';
+import { Checkout } from '../screens/CartPath/Checkout';
+import { CheckoutSuccess } from '../screens/CartPath/CheckoutSuccess';
 
 export function AppRoutes(){
     const Stack = createNativeStackNavigator();
@@ -66,6 +69,30 @@ export function AppRoutes(){
             <Stack.Screen 
               name="SuccessRegister" 
               component={SuccessRegister}
+              options={{
+                headerShown: false
+              }} 
+            />
+
+            <Stack.Screen 
+              name="Cart" 
+              component={Cart}
+              options={{
+                headerShown: false
+              }} 
+            />
+
+            <Stack.Screen 
+              name="Checkout" 
+              component={Checkout}
+              options={{
+                headerShown: false
+              }} 
+            />
+
+            <Stack.Screen 
+              name="CheckoutSuccess" 
+              component={CheckoutSuccess}
               options={{
                 headerShown: false
               }} 

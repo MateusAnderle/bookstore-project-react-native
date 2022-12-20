@@ -31,11 +31,11 @@ export function Header(){
 
                 <S.EndIcons>
                     <TouchableOpacity onPress={() => setIsSearchBarOpen(!isSearchBarOpen)}>
-                        <Ionicons name="search-sharp" size={30} color="#FBEFE3" style={{marginRight: 5}}/>
+                        <Ionicons name="search-sharp" size={30} color="#FBEFE3" style={{marginRight: 10}}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Ionicons name="cart-outline" size={30} color="#FBEFE3" style={{marginRight: 5}}/>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                        <Ionicons name="cart-outline" size={30} color="#FBEFE3" style={{marginRight: 15}}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
