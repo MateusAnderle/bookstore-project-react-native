@@ -19,16 +19,16 @@ export function Register(){
                 <S.Content>
                     <Image source={RegisterImage} style={{width: '100%', height: 80, borderRadius: 10, marginBottom: 20}}/>
 
-                    <S.Input placeholder="Digite seu nome completo"/>
-                    <S.Input placeholder="Digite aqui seu CEP"/>
-                    <S.Input placeholder="Digite aqui seu telefone"/>
-                    <S.Input placeholder="Digite aqui seu endereço"/>
-                    <S.Input placeholder="Digite aqui seu bairro"/>
-                    <S.Input placeholder="Digite aqui sua cidade"/>
-                    <S.Input placeholder="Digite aqui seu CPF"/>
-                    <S.Input placeholder="Digite aqui seu e-mail"/>
-                    <S.Input placeholder="Crie uma senha"/>
-                    <S.Input placeholder="Repita a senha"/>
+                    <S.Input placeholder="Digite seu nome completo" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu CEP" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu telefone" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu endereço" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu bairro" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui sua cidade" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu CPF" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite aqui seu e-mail" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Crie uma senha" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Repita a senha" placeholderTextColor="#AAA"/>
 
                     <S.LoginButton onPress={() => navigation.navigate('SuccessRegister')}>
                         <S.LoginButtonText>Cadastrar</S.LoginButtonText>

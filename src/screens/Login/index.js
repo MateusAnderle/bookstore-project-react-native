@@ -17,8 +17,8 @@ export function Login(){
                 <S.Content>
                     <Image source={LoginImage} style={{width: '100%', height: 80, borderRadius: 10, marginBottom: 20}}/>
 
-                    <S.Input placeholder="Digite seu login ou e-mail"/>
-                    <S.Input placeholder="Digite sua senha"/>
+                    <S.Input placeholder="Digite seu login ou e-mail" placeholderTextColor="#AAA"/>
+                    <S.Input placeholder="Digite sua senha" placeholderTextColor="#AAA"/>
 
                     <S.LoginButton>
                         <S.LoginButtonText>Login</S.LoginButtonText>

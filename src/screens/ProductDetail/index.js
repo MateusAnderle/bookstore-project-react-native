@@ -39,7 +39,7 @@ export function ProductDetail(){
                         
                         {product?.fichaTecnica?.map((item) => {
                             return (
-                                <S.DataSheetLine>
+                                <S.DataSheetLine key={item.id}>
                                     <S.DataKey>
                                         <S.DataTextTitle>{item.chave}</S.DataTextTitle>
                                     </S.DataKey>
