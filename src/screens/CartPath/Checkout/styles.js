@@ -72,7 +72,7 @@ export const PaymentButtonWrapper = styled.View`
 
 export const PaymentButton = styled.TouchableOpacity`
     background-color: #ccc;
-    padding: 15px 20px;
+    padding: 14px;
     border-radius: 10px;
     margin-bottom: 20px;
     justify-content: center;

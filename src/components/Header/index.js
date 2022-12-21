@@ -38,7 +38,7 @@ export function Header(){
 
                     <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Ionicons name="cart-outline" size={30} color="#FBEFE3" style={{marginRight: 15}}/>
-                        {products.length === 0 ? null : <S.Text>{products.length}</S.Text>}
+                        {products.length === 0 ? null : <S.Notification><S.Text>{products.length}</S.Text></S.Notification>}
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>

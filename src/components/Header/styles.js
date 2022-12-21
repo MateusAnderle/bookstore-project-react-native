@@ -25,14 +25,17 @@ export const IconBox = styled.View`
     border-radius: 15px;
 `;
 
-export const Text = styled.Text`
+export const Notification = styled.View`
     position: absolute;
     top: -5px;
     right: 7px;
     background: #80D6F7;
-    color: #000;
     padding: 2px 6px;
     border-radius: 15px;
+`;
+
+export const Text = styled.Text`  
+    color: #000;
     font-size: 12px;
     font-weight: bold;
 `;

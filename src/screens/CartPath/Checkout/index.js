@@ -38,6 +38,10 @@ export function Checkout(){
     }
 
     function zipCodePrepare() {
+        if(!fetchZipCode) {
+            return Alert.alert('Por favor, preencha os dados acima')
+        }
+
         const { logradouro, bairro, localidade, uf } = fetchZipCode
     
         setFinalDelivery({
@@ -80,9 +84,9 @@ export function Checkout(){
                     <S.Title>Olá, Visitante</S.Title>
 
                     <S.FormTitle>Complete seus dados para entrega</S.FormTitle>
-                    <S.Input placeholder="Digite seu CEP" onChangeText={setZip} onBlur={fetchApiZipCode}/>
-                    <S.Input placeholder="Digite o número" onChangeText={setNumber}/>
-                    <S.Input placeholder="Ponto de referência" onChangeText={setReferencePoint}/>
+                    <S.Input placeholder="Digite seu CEP" onChangeText={setZip} onBlur={fetchApiZipCode}  placeholderTextColor="#AAA" keyboardType="numeric"/>
+                    <S.Input placeholder="Digite o número" onChangeText={setNumber}  placeholderTextColor="#AAA" keyboardType="numeric"/>
+                    <S.Input placeholder="Ponto de referência" onChangeText={setReferencePoint}  placeholderTextColor="#AAA"/>
 
                     <S.PaymentTitle>Pagamento</S.PaymentTitle>
 
@@ -113,11 +117,11 @@ export function Checkout(){
                     {finalDelivery && (
                         <>
                             <S.SubtitleOrder>Entrega</S.SubtitleOrder>
-                            <S.DescriptionOrder>Logradouro: Avenida Marechal Deodoro da Fonseca, 199</S.DescriptionOrder>
-                            <S.DescriptionOrder>Bairro: Centro - Jaraguá do Sul, SC</S.DescriptionOrder>
-                            <S.DescriptionOrder>Referência: 1asdad</S.DescriptionOrder>
-                            <S.DescriptionOrder>Prazo de entrega estimado: 10 dias</S.DescriptionOrder>
-                            <S.DescriptionOrder>Valor do frete: R$ 15.00</S.DescriptionOrder>
+                            <S.DescriptionOrder>Logradouro: {finalDelivery.logradouro}, {finalDelivery.number}</S.DescriptionOrder>
+                            <S.DescriptionOrder>Bairro: {finalDelivery.bairro} - {finalDelivery.localidade}, {finalDelivery.uf}</S.DescriptionOrder>
+                            <S.DescriptionOrder>Referência: {finalDelivery.referencePoint}</S.DescriptionOrder>
+                            <S.DescriptionOrder>Prazo de entrega estimado: {finalDelivery.prazo} dias</S.DescriptionOrder>
+                            <S.DescriptionOrder>Valor do frete: {finalDelivery.valorFrete.toFixed(2)}</S.DescriptionOrder>
                         
                             <S.SubtitleOrder>Pagamento</S.SubtitleOrder>
                             <S.DescriptionOrder>Método de pagamento: Boleto Bancário</S.DescriptionOrder>
