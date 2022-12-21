@@ -14,7 +14,7 @@ export const ContentContainer = styled.View`
     justify-content: space-between;
 `;
 
-export const IconsAndTitle = styled.View`
+export const IconsAndTitle = styled.TouchableOpacity`
     flex-direction: row;
 `;
 
@@ -23,6 +23,18 @@ export const IconBox = styled.View`
     padding: 5px;
     margin-right: 10px;
     border-radius: 15px;
+`;
+
+export const Text = styled.Text`
+    position: absolute;
+    top: -5px;
+    right: 7px;
+    background: #80D6F7;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
 `;
 
 export const TitleWrapper = styled.View``;
@@ -79,7 +91,7 @@ export const CategoryBarList = styled.FlatList`
 `;
 
 export const CategoryButton = styled.TouchableOpacity`
-    margin: 10px 20px;
+    padding: 10px 20px;
 `;
 
 export const CategoryItem = styled.Text`

@@ -77,7 +77,7 @@ export const PaymentButton = styled.TouchableOpacity`
     margin-bottom: 20px;
     justify-content: center;
     align-items: center;
-
+    ${({active}) => active ? 'border: 2px solid #000': null};
 `;
 
 export const PaymentButtonText = styled.Text`

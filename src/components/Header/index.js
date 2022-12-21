@@ -1,13 +1,15 @@
 import * as S from './styles';
 import { Ionicons, AntDesign } from '@expo/vector-icons'; 
 import { TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { StatusBar } from 'react-native'; 
 import { useNavigation } from '@react-navigation/native';
+import { CartContext } from '../../context/CartContext';
 
 export function Header(){
     const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
     const navigation = useNavigation();
+    const { products } = useContext(CartContext)
     const CategoryList = ['Mais Vendidos', 'Lançamentos', 'Livros', 'Decorações', 'Educativo']
 
     function closeAndSearch (){
@@ -18,7 +20,7 @@ export function Header(){
         <S.Container>
             <StatusBar backgroundColor="#BF0A0D" barStyle="light-content"  />
             <S.ContentContainer>
-                <S.IconsAndTitle>
+                <S.IconsAndTitle onPress={() => navigation.navigate('Home')}>
                     <S.IconBox>
                         <AntDesign name="book" size={45} color="#000"/>
                     </S.IconBox>
@@ -36,6 +38,7 @@ export function Header(){
 
                     <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Ionicons name="cart-outline" size={30} color="#FBEFE3" style={{marginRight: 15}}/>
+                        {products.length === 0 ? null : <S.Text>{products.length}</S.Text>}
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>

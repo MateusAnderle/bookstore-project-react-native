@@ -38,7 +38,7 @@ export function Categories (){
                                 <S.BookImage source={item.image}/>
                                 <S.BookTitle>{item.livro}</S.BookTitle>
                                 <S.BookAuthor>{item.autor}</S.BookAuthor>
-                                <S.BookPrice>R$ {item.preco}</S.BookPrice>
+                                <S.BookPrice>R$ {item.preco.toFixed(2)}</S.BookPrice>
                             </S.BookBox>
                         )
                         }}

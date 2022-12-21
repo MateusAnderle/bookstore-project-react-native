@@ -3,13 +3,57 @@ import { BackButton } from "../../../components/BackButton";
 import { Footer } from "../../../components/Footer";
 import { Header } from "../../../components/Header";
 import { Ionicons } from '@expo/vector-icons';
-import { BookData } from '../../../utils/booksData';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useContext, useEffect, useState } from 'react';
+import { CartContext } from '../../../context/CartContext';
 
 export function Cart(){
+    const [itemsCart, setItemsCart] = useState()
+    const [totalCart, setTotalCart] = useState()
     const navigation = useNavigation();
+    const { 
+        products: cartProducts, 
+        addQuantity,
+        subQuantity,
+        setTotalCartCheckout, 
+    } = useContext(CartContext)
+
+    function goToCheckout() {
+        setTotalCartCheckout({
+          numberOfItems: itemsCart,
+          totalPriceCart: totalCart,
+        })
+        
+        navigation.navigate('Checkout')
+      }
+
+    useEffect(() => {
+        function itemsQuantity() {
+          const initialValue = 0
+          const numberOfItems = cartProducts.reduce(
+            (accumulator, currentValue) => accumulator + currentValue.quantidade,
+            initialValue,
+          )
+          setItemsCart(numberOfItems)
+        }
     
+        itemsQuantity()
+    }, [cartProducts])
+
+    useEffect(() => {
+        function totalPrice() {
+          const initialValue = 0
+          const priceOfItems = cartProducts.reduce(
+            (accumulator, currentValue) =>
+              accumulator + currentValue.preco * currentValue.quantidade,
+            initialValue,
+          )
+          setTotalCart(priceOfItems.toFixed(2))
+        }
+        totalPrice()
+    }, [cartProducts])
+
     return (
         <S.Container>
             <Header />
@@ -23,51 +67,57 @@ export function Cart(){
                 </S.HeaderTitle>
                 
                 <S.Content>
-                    {BookData?.map((item) => {
-                        return (
-                            <S.CartLineBox key={item.id}>
-                                <S.BookImage source={item.image}/>
-                                <S.DescriptionBox>
-                                    <S.Title><S.B>Título:</S.B> {item.livro}</S.Title>
-                                    <S.Author><S.B>Autor:</S.B> {item.autor}</S.Author>
-                                    <S.Price><S.B>Preço:</S.B> R$ {item.preco}</S.Price>
-                                    <S.QuantDesc>Quantidade: {item.quantidade}</S.QuantDesc>
+                        {cartProducts?.map((item) => {
+                            return (
+                                <S.CartLineBox key={item.id}>
+                                    <S.BookImage source={item.image}/>
+                                    <S.DescriptionBox>
+                                        <S.Title><S.B>Título:</S.B> {item.livro}</S.Title>
+                                        <S.Author><S.B>Autor:</S.B> {item.autor}</S.Author>
+                                        <S.Price><S.B>Preço:</S.B> R$ {item.preco.toFixed(2)}</S.Price>
+                                        <S.QuantDesc>Quantidade: {item.quantidade}</S.QuantDesc>
 
-                                    <S.Quantity>
-                                        <TouchableOpacity >
-                                            <Ionicons name="remove-circle-outline" size={30} color="black" />
-                                        </TouchableOpacity>
+                                        <S.Quantity>
+                                            <TouchableOpacity onPress={() => subQuantity(item.id)}>
+                                                <Ionicons name="remove-circle-outline" size={30} color="black" />
+                                            </TouchableOpacity>
 
-                                        <S.QuantityTitle>Alterar Quantidade</S.QuantityTitle>
+                                            <S.QuantityTitle>Alterar Quantidade</S.QuantityTitle>
 
-                                        <TouchableOpacity>
-                                            <Ionicons name="add-circle-outline" size={30} color="black" />
-                                        </TouchableOpacity>
-                                    </S.Quantity>
-                                </S.DescriptionBox>
-                            </S.CartLineBox>
-                        )
-                    })}
+                                            <TouchableOpacity onPress={() => addQuantity(item.id)}>
+                                                <Ionicons name="add-circle-outline" size={30} color="black" />
+                                            </TouchableOpacity>
+                                        </S.Quantity>
+                                    </S.DescriptionBox>
+                                </S.CartLineBox>
+                            )
+                        })}
+                        {cartProducts.length === 0 ? (
+                        <S.CartTotalBox>
+                            <S.B>Carrinho Vazio...</S.B>
+                            <S.EmptyMessage>Continue navegando em nosso APP!</S.EmptyMessage>
+                        </S.CartTotalBox>
+                        ) : (
+                            <S.CartTotalBox>
+                                <S.QuantityTotal>
+                                    <S.TotalTitle>Quantidade total:</S.TotalTitle>
+                                    <S.TotalSubtitle>{itemsCart}</S.TotalSubtitle>
+                                </S.QuantityTotal>
 
-                    <S.CartTotalBox>
-                        <S.QuantityTotal>
-                            <S.TotalTitle>Quantidade total:</S.TotalTitle>
-                            <S.TotalSubtitle>25</S.TotalSubtitle>
-                        </S.QuantityTotal>
+                                <S.PriceTotal>
+                                    <S.TotalTitle>Valor da compra:</S.TotalTitle>
+                                    <S.TotalSubtitle>R$ {totalCart}</S.TotalSubtitle>
+                                </S.PriceTotal>
 
-                        <S.PriceTotal>
-                            <S.TotalTitle>Valor da compra:</S.TotalTitle>
-                            <S.TotalSubtitle>R$ 17,90</S.TotalSubtitle>
-                        </S.PriceTotal>
+                                <S.DescriptionTotal>
+                                    Sua compra pode ser parcelada em até 10x sem juros
+                                </S.DescriptionTotal>
 
-                        <S.DescriptionTotal>
-                            Sua compra pode ser parcelada em até 10x sem juros
-                        </S.DescriptionTotal>
-
-                        <S.CartTotalButton onPress={() => navigation.navigate('Checkout')}>
-                            <S.CartTotalButtonText>Finalizar Compra</S.CartTotalButtonText>
-                        </S.CartTotalButton>
-                    </S.CartTotalBox>
+                                <S.CartTotalButton onPress={goToCheckout}>
+                                    <S.CartTotalButtonText>Finalizar Compra</S.CartTotalButtonText>
+                                </S.CartTotalButton>
+                            </S.CartTotalBox>
+                        )}
                 </S.Content>
 
                 <Footer />

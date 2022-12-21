@@ -106,6 +106,10 @@ export const CartTotalBox = styled.View`
     width: 100%;
 `;
 
+export const EmptyMessage = styled.Text`
+    text-align: center;
+`;
+
 export const QuantityTotal = styled.View`
     flex-direction: row;
     justify-content: space-between;

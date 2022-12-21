@@ -4,9 +4,67 @@ import { Header } from '../../../components/Header';
 import { Ionicons } from '@expo/vector-icons';
 import * as S from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { useContext, useState } from 'react';
+import { CartContext } from '../../../context/CartContext';
+import { Alert } from 'react-native';
+import { zipCodeApi } from '../../../utils/api'
 
 export function Checkout(){
+    const types = ['Cartão de Crédito', 'Boleto', 'PIX']
+    const [finalDelivery, setFinalDelivery] = useState()
+    const [fetchZipCode, setFetchZipCode] = useState()
+    const [zip, setZip] = useState();
+    const [number, setNumber] = useState('')
+    const [referencePoint, setReferencePoint] = useState('')
+    const [active, setActive] = useState(types[0])
     const navigation = useNavigation();
+    const { 
+        products, 
+        totalCartCheckout,
+        setCheckoutDataToApi,
+        setProducts,
+        setTotalCartCheckout,
+    } = useContext(CartContext)
+    const cartToNumber = parseFloat(totalCartCheckout.totalPriceCart)
+    const frete = 15
+    const totalCheckout = cartToNumber + frete
+
+    async function fetchApiZipCode() {
+        if (zip.length < 8 || zip.length > 8) {
+          return
+        }
+        const response = await zipCodeApi.get(`/${zip}/json/`)
+        setFetchZipCode(response.data)
+    }
+
+    function zipCodePrepare() {
+        const { logradouro, bairro, localidade, uf } = fetchZipCode
+    
+        setFinalDelivery({
+          logradouro,
+          bairro,
+          localidade,
+          uf,
+          referencePoint: referencePoint,
+          number: number,
+          valorFrete: 15,
+          prazo: 10,
+          payment: active,
+        })
+    }
+
+    function sendToApi() {
+        if(!finalDelivery) {
+            Alert.alert('Confrime os dados primeiro')
+            return
+        }
+        setCheckoutDataToApi([products, totalCartCheckout, finalDelivery]) // Criar rota para mandar para API
+        setProducts([])
+        setTotalCartCheckout([])
+        setFinalDelivery()
+        navigation.navigate('CheckoutSuccess')
+    }
+
     return (
         <S.Container>
             <Header />
@@ -22,27 +80,25 @@ export function Checkout(){
                     <S.Title>Olá, Visitante</S.Title>
 
                     <S.FormTitle>Complete seus dados para entrega</S.FormTitle>
-                    <S.Input placeholder="Digite seu CEP" />
-                    <S.Input placeholder="Digite o número" />
-                    <S.Input placeholder="Ponto de referência" />
+                    <S.Input placeholder="Digite seu CEP" onChangeText={setZip} onBlur={fetchApiZipCode}/>
+                    <S.Input placeholder="Digite o número" onChangeText={setNumber}/>
+                    <S.Input placeholder="Ponto de referência" onChangeText={setReferencePoint}/>
 
                     <S.PaymentTitle>Pagamento</S.PaymentTitle>
 
                     <S.PaymentButtonWrapper>
-                        <S.PaymentButton>
-                            <S.PaymentButtonText>Cartão de crédito</S.PaymentButtonText>
-                        </S.PaymentButton>
-
-                        <S.PaymentButton>
-                            <S.PaymentButtonText>Boleto</S.PaymentButtonText>
-                        </S.PaymentButton>
-
-                        <S.PaymentButton>
-                            <S.PaymentButtonText>PIX</S.PaymentButtonText>
-                        </S.PaymentButton>
+                        {types.map((type) => (
+                            <S.PaymentButton
+                            key={type}
+                            active={active === type}
+                            onPress={() => setActive(type)}
+                            >
+                            <S.PaymentButtonText>{type}</S.PaymentButtonText>
+                            </S.PaymentButton>
+                        ))}
                     </S.PaymentButtonWrapper>
 
-                    <S.ConfirmForm>
+                    <S.ConfirmForm onPress={zipCodePrepare}>
                         <S.ConfirmButtonText>Confirmar dados</S.ConfirmButtonText>
                     </S.ConfirmForm>
                 </S.Content>
@@ -51,24 +107,28 @@ export function Checkout(){
                     <S.OrderTitle>Resumo do pedido</S.OrderTitle>
 
                     <S.SubtitleOrder>Produtos</S.SubtitleOrder>
-                    <S.DescriptionOrder>Quantidade de itens: 1</S.DescriptionOrder>
-                    <S.DescriptionOrder>Valor total dos produtor: R$ 192,00</S.DescriptionOrder>
+                    <S.DescriptionOrder>Quantidade de itens: {totalCartCheckout.numberOfItems}</S.DescriptionOrder>
+                    <S.DescriptionOrder>Valor total dos produtos: R$ {totalCartCheckout.totalPriceCart}</S.DescriptionOrder>
 
-                    <S.SubtitleOrder>Entrega</S.SubtitleOrder>
-                    <S.DescriptionOrder>Logradouro: Avenida Marechal Deodoro da Fonseca, 199</S.DescriptionOrder>
-                    <S.DescriptionOrder>Bairro: Centro - Jaraguá do Sul, SC</S.DescriptionOrder>
-                    <S.DescriptionOrder>Referência: 1asdad</S.DescriptionOrder>
-                    <S.DescriptionOrder>Prazo de entrega estimado: 10 dias</S.DescriptionOrder>
-                    <S.DescriptionOrder>Valor do frete: R$ 15.00</S.DescriptionOrder>
+                    {finalDelivery && (
+                        <>
+                            <S.SubtitleOrder>Entrega</S.SubtitleOrder>
+                            <S.DescriptionOrder>Logradouro: Avenida Marechal Deodoro da Fonseca, 199</S.DescriptionOrder>
+                            <S.DescriptionOrder>Bairro: Centro - Jaraguá do Sul, SC</S.DescriptionOrder>
+                            <S.DescriptionOrder>Referência: 1asdad</S.DescriptionOrder>
+                            <S.DescriptionOrder>Prazo de entrega estimado: 10 dias</S.DescriptionOrder>
+                            <S.DescriptionOrder>Valor do frete: R$ 15.00</S.DescriptionOrder>
+                        
+                            <S.SubtitleOrder>Pagamento</S.SubtitleOrder>
+                            <S.DescriptionOrder>Método de pagamento: Boleto Bancário</S.DescriptionOrder>
 
-                    <S.SubtitleOrder>Pagamento</S.SubtitleOrder>
-                    <S.DescriptionOrder>Método de pagamento: Boleto Bancário</S.DescriptionOrder>
-
-                    <S.OrderTitle style={{marginTop: 20}}>
-                        Total do pedido: R$ 320,90
-                    </S.OrderTitle>
-
-                    <S.CheckouButton onPress={() => navigation.navigate('CheckoutSuccess')}>
+                            <S.OrderTitle style={{marginTop: 20}}>
+                                Total do pedido: R$ {totalCheckout.toFixed(2)}
+                            </S.OrderTitle>
+                        </>
+                    )}
+                    
+                    <S.CheckouButton onPress={sendToApi}>
                         <S.CheckouButtonText>Finalizar Compra</S.CheckouButtonText>
                     </S.CheckouButton>
                 </S.Content>
