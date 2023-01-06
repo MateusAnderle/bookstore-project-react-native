@@ -16,7 +16,6 @@ export const Content = styled.View`
     padding: 20px;
     border-radius: 10px;
     background-color: #FFF;
-    align-items: center;
 `;
 
 export const Input = styled.TextInput`
@@ -24,8 +23,17 @@ export const Input = styled.TextInput`
     border-radius: 10px;
     width: 100%;
     height: 45px;
-    margin-bottom: 20px;
     padding: 0 15px;
+    margin-top: 20px;
+`;
+
+export const ContainerError = styled.View`
+    margin-top: 0;
+`;
+
+export const TextError = styled.Text`
+    color: #f00;
+    font-style: italic;
 `;
 
 export const LoginButton = styled.TouchableOpacity`
@@ -35,6 +43,7 @@ export const LoginButton = styled.TouchableOpacity`
     width: 100%;
     background-color: #DDD;
     border-radius: 10px;
+    margin-top: 20px;
 `;
 
 export const LoginButtonText = styled.Text`
