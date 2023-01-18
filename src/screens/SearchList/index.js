@@ -33,7 +33,12 @@ export function SearchList (){
                 <S.Content>
                     <S.Title>Exibindo resultados para "{search}"</S.Title>
 
-                    {isLoading ? <ActivityIndicator /> : 
+                    {isLoading ? 
+                        <ActivityIndicator 
+                            color='#F00'
+                            size='large'
+                            style={{marginTop: 100, marginBottom: 100}}
+                        /> : 
                         <S.BooksList 
                             columnWrapperStyle={{
                                 justifyContent: "space-between",
