@@ -15,7 +15,7 @@ export function ProductDetail(){
     const { addProductCart, products: cartProducts } = useContext(CartContext)
 
     async function handleAddToCart(){
-        const findEqual = cartProducts.find((item) => item.id === product.id)
+        const findEqual = cartProducts.find((item) => item._id === product._id)
             if (findEqual) {
                 Alert.alert('Produto já existente no carrinho!')
                 return
@@ -33,7 +33,7 @@ export function ProductDetail(){
             <S.ScrollList>
                 <S.Content>
                     <S.ProductBox>
-                        <S.BookImage source={product.image}/>
+                        <S.BookImage source={{uri: product.image}}/>
                         <S.BookTitle>{product.livro}</S.BookTitle>
                         <S.BookAuthor>{product.autor}</S.BookAuthor>
                         <S.Price>R$ {product.preco.toFixed(2)}</S.Price>
@@ -53,20 +53,97 @@ export function ProductDetail(){
 
                     <S.ProductBox>
                         <S.ProductDatasheetTitle>Ficha técnica</S.ProductDatasheetTitle>
-                        
-                        {product?.fichaTecnica?.map((item) => {
-                            return (
-                                <S.DataSheetLine key={item.id}>
-                                    <S.DataKey>
-                                        <S.DataTextTitle>{item.chave}</S.DataTextTitle>
-                                    </S.DataKey>
 
-                                    <S.DataValue>
-                                        <S.DataTextDescription>{item.valor}</S.DataTextDescription>
-                                    </S.DataValue>
-                                </S.DataSheetLine>
-                            )
-                        })}
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Livro</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.livro}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Autor</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.autor}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Gênero</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.genero}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Quantidade</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.quantidade}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Publicação</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.ano}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Idioma</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.idioma}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Código de barras</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.isbn}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Fabricante</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.fabricante}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
+                            <S.DataSheetLine>
+                                <S.DataKey>
+                                    <S.DataTextTitle>Dimensões do produto</S.DataTextTitle>
+                                </S.DataKey>
+
+                                <S.DataValue>
+                                    <S.DataTextDescription>{product.dimensoes}</S.DataTextDescription>
+                                </S.DataValue>
+                            </S.DataSheetLine>
+
                     </S.ProductBox>
                 </S.Content>
                 

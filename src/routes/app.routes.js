@@ -10,6 +10,7 @@ import { SuccessRegister } from '../screens/SuccessRegister';
 import { Cart } from '../screens/CartPath/Cart';
 import { Checkout } from '../screens/CartPath/Checkout';
 import { CheckoutSuccess } from '../screens/CartPath/CheckoutSuccess';
+import { SearchList } from '../screens/SearchList';
 
 export function AppRoutes(){
     const Stack = createNativeStackNavigator();
@@ -93,6 +94,14 @@ export function AppRoutes(){
             <Stack.Screen 
               name="CheckoutSuccess" 
               component={CheckoutSuccess}
+              options={{
+                headerShown: false
+              }} 
+            />
+
+            <Stack.Screen 
+              name="SearchList" 
+              component={SearchList}
               options={{
                 headerShown: false
               }} 

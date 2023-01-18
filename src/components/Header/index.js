@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { StatusBar } from 'react-native'; 
 import { useNavigation } from '@react-navigation/native';
 import { CartContext } from '../../context/CartContext';
+import { useForm, Controller } from 'react-hook-form';
 
 export function Header(){
     const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
@@ -12,8 +13,17 @@ export function Header(){
     const { products } = useContext(CartContext)
     const CategoryList = ['Mais Vendidos', 'Lançamentos', 'Livros', 'Decorações', 'Educativo']
 
-    function closeAndSearch (){
+    const {
+        control,
+        handleSubmit,
+        resetField,
+        formState: { errors },
+    } = useForm()
+
+    const onSubmit = async (data) => {
         setIsSearchBarOpen(!isSearchBarOpen)
+        navigation.navigate('SearchList', {search: data.search})
+        resetField('search')
     }
     
     return (
@@ -49,8 +59,20 @@ export function Header(){
 
             {!!isSearchBarOpen &&
                 <S.SearchContainer>
-                    <S.input />
-                    <S.SearchButton onPress={closeAndSearch}>
+                    <Controller 
+                      name="search"
+                      control={control}
+                      rules={{required: 'Campo obrigatório'}}
+                      render={({ field: { onChange, value } }) => (
+                        <S.input 
+                          placeholder="Pesquise por algum livro" 
+                          placeholderTextColor="#AAA"
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                    <S.SearchButton onPress={handleSubmit(onSubmit)}>
                         <S.ButtonText>Buscar</S.ButtonText>
                     </S.SearchButton>
                 </S.SearchContainer>
@@ -62,7 +84,7 @@ export function Header(){
                 data={CategoryList}
                 renderItem={({item}) => {
                     return (
-                        <S.CategoryButton 
+                        <S.CategoryButton key={item}
                             onPress={() => navigation.navigate('Categories', {
                                 category: item
                         })}>

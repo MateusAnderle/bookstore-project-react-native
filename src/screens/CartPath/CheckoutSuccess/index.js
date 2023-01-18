@@ -4,9 +4,21 @@ import { Header } from '../../../components/Header'
 import CongratulationImage from '../../../assets/congratulations.png'
 import * as S from './styles'
 import { useNavigation } from '@react-navigation/native'
+import { useContext, useEffect } from 'react'
+import { CartContext } from '../../../context/CartContext'
 
 export function CheckoutSuccess(){
     const navigation = useNavigation();
+    const { setProducts, setTotalCartCheckout } = useContext(CartContext)
+
+    async function clearInputs() {
+      setProducts([])
+      setTotalCartCheckout([])
+    }
+  
+    useEffect(() => {
+      clearInputs()
+    }, [])
     
     return (
         <S.Container>

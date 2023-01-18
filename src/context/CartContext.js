@@ -12,18 +12,18 @@ export function CartContextProvider({ children }) {
   }
 
   function addQuantity(productId) {
-    const filteredProducts = products.filter((item) => item.id !== productId)
+    const filteredProducts = products.filter((item) => item._id !== productId)
 
-    const result = products.find((item) => item.id === productId)
+    const result = products.find((item) => item._id === productId)
     result.quantidade = result.quantidade + 1
 
     setProducts([...filteredProducts, result])
   }
 
   function subQuantity(productId) {
-    const filteredProducts = products.filter((item) => item.id !== productId)
+    const filteredProducts = products.filter((item) => item._id !== productId)
 
-    const result = products.find((item) => item.id === productId)
+    const result = products.find((item) => item._id === productId)
     result.quantidade = result.quantidade - 1
 
     if (result.quantidade <= 0) {

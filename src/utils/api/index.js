@@ -5,5 +5,5 @@ export const zipCodeApi = axios.create({
 })
 
 export const api = axios.create({
-  baseUrl: '',
+  baseURL: 'https://used-bookstore-api.herokuapp.com',
 })

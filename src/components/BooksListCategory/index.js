@@ -10,12 +10,12 @@ export function BooksListCategory({title, category}){
             <S.BooksList
             data={category}
             horizontal
-            keyExtractor={item => item.id}
+            keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
                 return(
-                <S.BookBox onPress={() => navigation.navigate('ProductDetail', {product: item})}>
-                    <S.BookImage source={item.image}/>
+                <S.BookBox key={item._id} onPress={() => navigation.navigate('ProductDetail', {product: item})}>
+                    <S.BookImage source={{uri: item.image}}/>
                     <S.BookTitle>{item.livro}</S.BookTitle>
                     <S.BookAuthor>{item.autor}</S.BookAuthor>
                     <S.BookPrice>R$ {item.preco.toFixed(2)}</S.BookPrice>

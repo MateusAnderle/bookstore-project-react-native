@@ -69,8 +69,8 @@ export function Cart(){
                 <S.Content>
                         {cartProducts?.map((item) => {
                             return (
-                                <S.CartLineBox key={item.id}>
-                                    <S.BookImage source={item.image}/>
+                                <S.CartLineBox key={item._id}>
+                                    <S.BookImage source={{uri: item.image}}/>
                                     <S.DescriptionBox>
                                         <S.Title><S.B>Título:</S.B> {item.livro}</S.Title>
                                         <S.Author><S.B>Autor:</S.B> {item.autor}</S.Author>
@@ -78,13 +78,13 @@ export function Cart(){
                                         <S.QuantDesc>Quantidade: {item.quantidade}</S.QuantDesc>
 
                                         <S.Quantity>
-                                            <TouchableOpacity onPress={() => subQuantity(item.id)}>
+                                            <TouchableOpacity onPress={() => subQuantity(item._id)}>
                                                 <Ionicons name="remove-circle-outline" size={30} color="black" />
                                             </TouchableOpacity>
 
                                             <S.QuantityTitle>Alterar Quantidade</S.QuantityTitle>
 
-                                            <TouchableOpacity onPress={() => addQuantity(item.id)}>
+                                            <TouchableOpacity onPress={() => addQuantity(item._id)}>
                                                 <Ionicons name="add-circle-outline" size={30} color="black" />
                                             </TouchableOpacity>
                                         </S.Quantity>

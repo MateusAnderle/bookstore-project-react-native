@@ -3,10 +3,10 @@ import { BackButton } from "../../components/BackButton";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import RegisterImage from '../../assets/register.png'
-import { Image } from 'react-native';
+import { Alert, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form'
-import { zipCodeApi } from '../../utils/api'
+import { api, zipCodeApi } from '../../utils/api'
 import { useState } from 'react';
 
 export function Register(){
@@ -36,9 +36,26 @@ export function Register(){
         return setPasswordEqual('As senhas devem ser iguais')
       }
       setPasswordEqual()
-      const cpfData = JSON.stringify(data)
-      navigation.navigate('SuccessRegister')
-      // Tirar senha via route (segurança)
+
+      try {
+        await api.post('/registration', {
+          name: data.name,
+          zipCode: data.zipCode,
+          phone: data.phone,
+          address: data.address,
+          district: data.district,
+          city: data.city,
+          cpf: data.cpf,
+          email: data.email,
+          password: data.password,
+          repeatPassword: data.repeatPassword,
+        })
+  
+        navigation.navigate('SuccessRegister')
+      } catch (error) {
+        Alert.alert('Erro ao enviar o seu pedido!')
+        console.log(error)
+      }
     }
     
     async function fetchZipCode(code) {

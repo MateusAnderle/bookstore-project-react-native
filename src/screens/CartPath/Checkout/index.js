@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../../context/CartContext';
 import { Alert } from 'react-native';
-import { zipCodeApi } from '../../../utils/api'
+import { api, zipCodeApi } from '../../../utils/api'
 
 export function Checkout(){
     const types = ['Cartão de Crédito', 'Boleto', 'PIX']
@@ -21,9 +21,6 @@ export function Checkout(){
     const { 
         products, 
         totalCartCheckout,
-        setCheckoutDataToApi,
-        setProducts,
-        setTotalCartCheckout,
     } = useContext(CartContext)
     const cartToNumber = parseFloat(totalCartCheckout.totalPriceCart)
     const frete = 15
@@ -57,16 +54,24 @@ export function Checkout(){
         })
     }
 
-    function sendToApi() {
+    async function sendToApi() {
         if(!finalDelivery) {
             Alert.alert('Confrime os dados primeiro')
             return
         }
-        setCheckoutDataToApi([products, totalCartCheckout, finalDelivery]) // Criar rota para mandar para API
-        setProducts([])
-        setTotalCartCheckout([])
-        setFinalDelivery()
-        navigation.navigate('CheckoutSuccess')
+
+        try {
+            await api.post('/order', {
+              produtos: products,
+              resumoPedido: totalCartCheckout,
+              entrega: finalDelivery,
+            })
+      
+            navigation.navigate('CheckoutSuccess')
+        } catch (error) {
+            Alert.alert('Erro ao enviar o seu pedido!')
+            console.log(error)
+        }
     }
 
     return (
