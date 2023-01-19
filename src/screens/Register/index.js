@@ -63,10 +63,14 @@ export function Register(){
       if (zipCodeFiltered.length < 8 || zipCodeFiltered.length > 8) {
         return
       }
-      const response = await zipCodeApi.get(`/${zipCodeFiltered}/json/`)
-      setValue('address', response.data.logradouro)
-      setValue('district', response.data.bairro)
-      setValue('city', response.data.localidade)
+      try {
+        const response = await zipCodeApi.get(`/${zipCodeFiltered}/json/`)
+        setValue('address', response.data.logradouro)
+        setValue('district', response.data.bairro)
+        setValue('city', response.data.localidade)
+      } catch (error) {
+        console.log(error)
+      } 
     }
   
     function checkCpf(cpf) {

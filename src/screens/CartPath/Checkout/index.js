@@ -30,8 +30,13 @@ export function Checkout(){
         if (zip.length < 8 || zip.length > 8) {
           return
         }
-        const response = await zipCodeApi.get(`/${zip}/json/`)
-        setFetchZipCode(response.data)
+        try {
+            const response = await zipCodeApi.get(`/${zip}/json/`)
+            setFetchZipCode(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     function zipCodePrepare() {
