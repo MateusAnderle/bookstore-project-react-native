@@ -13,15 +13,16 @@ export function Home() {
   const [books, setBooks] = useState()
   const [isLoading, seIsLoading] = useState(false)
 
+  const categories = ['Mais Vendidos', 'Lançamentos', 'Livros']
+
   async function fetchBooks() {
     try {
-      const response = await api.get('/products')
-      const bestSellerBooks = response?.data
-      setBestSellers(bestSellerBooks)
-      const newBooks = response?.data?.filter((item) => item.genero === "Lançamentos")
-      setNewBooks(newBooks)
-      const books = response?.data?.filter((item) => item.genero === "Livros")
-      setBooks(books)
+      const responseBestSellers = await api.get(`/products/filter/${categories[0]}`)
+      const responseNew = await api.get(`/products/filter/${categories[1]}`)
+      const responseBooks = await api.get(`/products/filter/${categories[2]}`)
+      setBestSellers(responseBestSellers.data)
+      setNewBooks(responseNew.data)
+      setBooks(responseBooks.data)
     } catch (error) {
       console.log(error)
     } finally {
