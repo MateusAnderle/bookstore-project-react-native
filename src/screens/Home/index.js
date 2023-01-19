@@ -14,15 +14,19 @@ export function Home() {
   const [isLoading, seIsLoading] = useState(false)
 
   async function fetchBooks() {
-    const response = await api.get('/products')
-    const bestSellerBooks = response?.data
-    setBestSellers(bestSellerBooks)
-    const newBooks = response?.data?.filter((item) => item.genero === "Lançamentos")
-    setNewBooks(newBooks)
-    const books = response?.data?.filter((item) => item.genero === "Livros")
-    setBooks(books)
-
-    seIsLoading(false)
+    try {
+      const response = await api.get('/products')
+      const bestSellerBooks = response?.data
+      setBestSellers(bestSellerBooks)
+      const newBooks = response?.data?.filter((item) => item.genero === "Lançamentos")
+      setNewBooks(newBooks)
+      const books = response?.data?.filter((item) => item.genero === "Livros")
+      setBooks(books)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      seIsLoading(false)
+    }
   }
 
   useEffect(() => {

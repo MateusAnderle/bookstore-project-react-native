@@ -4,7 +4,7 @@ import { BackButton } from "../../components/BackButton";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { api } from '../../utils/api'
 import { Footer } from "../../components/Footer";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
 
@@ -16,9 +16,15 @@ export function Categories (){
     const [isLoading, seIsLoading] = useState(true)
   
     async function fetchCategory() {
-      const response = await api.get(`/products/filter/${category}`)
-      setData(response?.data)
-      seIsLoading(false)
+        try {
+            const response = await api.get(`/products/filter/${category}`)
+            setData(response?.data)
+        } catch (error) {
+            console.log(error)
+            setData()
+        } finally {
+            seIsLoading(false)
+        }
     }
   
     useEffect(() => {
@@ -51,6 +57,7 @@ export function Categories (){
                             keyExtractor={item => item._id}
                             showsVerticalScrollIndicator={false}
                             ListFooterComponent={<Footer />}
+                            ListEmptyComponent={<S.EmptyList>Tente novamente ou procure em outra página</S.EmptyList>}
                             numColumns={2}
                             renderItem={({item}) => {
                             return(

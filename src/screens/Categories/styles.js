@@ -19,6 +19,10 @@ export const Title = styled.Text`
 
 export const BooksList = styled.FlatList``;
 
+export const EmptyList = styled.Text`
+    margin: 40px 20px;
+`;
+
 
 export const BookBox = styled.TouchableOpacity`
     justify-content: center;
