@@ -33,7 +33,7 @@ export function Checkout() {
   const types = ["Cartão de Crédito", "Boleto", "PIX"];
   const [finalDelivery, setFinalDelivery] = useState({} as FinalDeliveryProps);
   const [fetchZipCode, setFetchZipCode] = useState({} as FetchZipCodeProps);
-  const [zip, setZip] = useState([]);
+  const [zip, setZip] = useState("");
   const [number, setNumber] = useState<string>();
   const [referencePoint, setReferencePoint] = useState<string>();
   const [active, setActive] = useState(types[0]);
@@ -182,7 +182,7 @@ export function Checkout() {
                 Prazo de entrega estimado: {finalDelivery.prazo} dias
               </S.DescriptionOrder>
               <S.DescriptionOrder>
-                Valor do frete: {finalDelivery.valorFrete.toFixed(2)}
+                Valor do frete: {finalDelivery?.valorFrete?.toFixed(2)}
               </S.DescriptionOrder>
 
               <S.SubtitleOrder>Pagamento</S.SubtitleOrder>

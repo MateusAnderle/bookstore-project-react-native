@@ -8,10 +8,6 @@ import { ActivityIndicator, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { BookObjectProps } from "../Home";
 
-interface BooksItemProps {
-  item: BookObjectProps;
-}
-
 interface SearchDataProps {
   filteredBooks: BookObjectProps[];
   pages: number;
@@ -21,7 +17,7 @@ export function SearchList() {
   const { navigate } = useNavigation<any>();
   const route = useRoute<any>();
   const { search } = route.params;
-  const [data, setData] = useState<SearchDataProps | null>(null);
+  const [data, setData] = useState<any>();
   const [isLoading, seIsLoading] = useState(true);
 
   async function fetchSearch() {
@@ -63,7 +59,7 @@ export function SearchList() {
             }}
             data={data}
             horizontal={false}
-            keyExtractor={(item: BookObjectProps) => item.id}
+            keyExtractor={(_, index) => String(index)}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={<Footer />}
             ListEmptyComponent={
@@ -72,7 +68,7 @@ export function SearchList() {
               </S.EmptyList>
             }
             numColumns={2}
-            renderItem={({ item }: BooksItemProps) => {
+            renderItem={({ item }: any) => {
               return (
                 <S.BookBox
                   onPress={() => navigate("ProductDetail", { product: item })}

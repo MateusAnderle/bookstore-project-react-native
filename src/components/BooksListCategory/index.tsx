@@ -8,7 +8,13 @@ interface BooksListCategoryProps {
 }
 
 interface BooksItemProps {
-  item: BookObjectProps;
+  item: {
+    id: string;
+    image: string;
+    livro: string;
+    autor: string;
+    preco: number;
+  };
 }
 
 export function BooksListCategory({ title, category }: BooksListCategoryProps) {
@@ -20,9 +26,9 @@ export function BooksListCategory({ title, category }: BooksListCategoryProps) {
       <S.BooksList
         data={category}
         horizontal
-        keyExtractor={(item: BookObjectProps) => item.id}
+        keyExtractor={(_, index) => String(index)}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }: BooksItemProps) => {
+        renderItem={({ item }: any) => {
           return (
             <S.BookBox
               key={item.id}

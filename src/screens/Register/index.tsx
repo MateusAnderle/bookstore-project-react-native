@@ -9,31 +9,43 @@ import { useForm, Controller } from "react-hook-form";
 import { api, zipCodeApi } from "../../utils/api";
 import { useState } from "react";
 
-interface PasswordProps {
-  target: {
-    value: string;
-  };
-}
-
 interface RegistrationFormProps {
   name: string;
-  zipCode: number;
+  zipCode: string;
   phone: string;
   address: string;
   district: string;
   city: string;
   cpf: string;
   email: string;
-  password: PasswordProps;
-  repeatPassword: PasswordProps;
+  password: string;
+  repeatPassword: string;
+}
+
+interface FetchZipCodeProps {
+  target: {
+    value: string;
+  };
+}
+
+interface CheckCpfProps {
+  target: {
+    value: string;
+  };
 }
 
 export function Register() {
   const { navigate } = useNavigation<any>();
+  const [registeredCpf, setRegisteredCpf] = useState<string>();
+  const [passwordEqual, setPasswordEqual] = useState<string>();
 
-  const [registeredCpf, setRegisteredCpf] = useState<boolean>();
-  const [password, setPassword] = useState<PasswordProps>();
-  const [newPassword, setNewPassword] = useState<PasswordProps>();
+  const customersCPF = [
+    { id: 1, cpf: "08048892952" },
+    { id: 2, cpf: "08048892951" },
+    { id: 3, cpf: "08048892950" },
+    { id: 4, cpf: "12345678910" },
+    // tirar verificação do front-end
+  ];
 
   const {
     control,
@@ -43,6 +55,11 @@ export function Register() {
   } = useForm<RegistrationFormProps>();
 
   const onSubmit = async (data: RegistrationFormProps) => {
+    if (data.password !== data.repeatPassword) {
+      return setPasswordEqual("As senhas devem ser iguais");
+    }
+    setPasswordEqual("");
+
     try {
       await api.post("/registration", {
         name: data.name,
@@ -56,6 +73,7 @@ export function Register() {
         password: data.password,
         repeatPassword: data.repeatPassword,
       });
+
       navigate("SuccessRegister");
     } catch (error) {
       Alert.alert("Erro ao enviar o seu pedido!");
@@ -63,7 +81,7 @@ export function Register() {
     }
   };
 
-  async function fetchZipCode(code: React.ChangeEvent<HTMLInputElement>) {
+  async function fetchZipCode(code: FetchZipCodeProps) {
     const zipCodeFiltered = code.target.value;
     if (zipCodeFiltered.length < 8 || zipCodeFiltered.length > 8) {
       return;
@@ -78,20 +96,14 @@ export function Register() {
     }
   }
 
-  async function checkCpf(cpf: React.ChangeEvent<HTMLInputElement>) {
+  function checkCpf(cpf: CheckCpfProps) {
     const cpfValue = cpf.target.value;
     if (cpfValue.length < 11 || cpfValue.length > 11) {
       return;
     }
-    try {
-      const response = await api.get(`/registration/${cpfValue}`);
-      if (response.status === 200) {
-        setRegisteredCpf(false);
-      }
-    } catch (error) {
-      setRegisteredCpf(true);
-      console.log(error);
-    }
+    const [cpfFiltered] = customersCPF.filter((item) => item.cpf === cpfValue);
+    //AQUI VOU TROCAR A REQUISIÇÃO
+    setRegisteredCpf(cpfFiltered);
   }
 
   return (
@@ -359,13 +371,9 @@ export function Register() {
             </S.ContainerError>
           )}
 
-          {password && newPassword && (
+          {passwordEqual !== null && (
             <S.ContainerError>
-              <S.TextError>
-                {password.target.value === newPassword.target.value
-                  ? null
-                  : "As senhas devem ser iguais"}
-              </S.TextError>
+              <S.TextError>{passwordEqual}</S.TextError>
             </S.ContainerError>
           )}
 

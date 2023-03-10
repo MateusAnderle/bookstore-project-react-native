@@ -1,5 +1,9 @@
 import styled from "styled-components/native";
 
+interface PaymentButtonProps {
+  active: boolean;
+}
+
 export const Container = styled.View`
   flex: 1;
   background-color: #efefef;
@@ -76,7 +80,8 @@ export const PaymentButton = styled.TouchableOpacity`
   margin-bottom: 20px;
   justify-content: center;
   align-items: center;
-  ${({ active }) => (active ? "border: 2px solid #000" : null)};
+  ${({ active }: PaymentButtonProps) =>
+    active ? "border: 2px solid #000" : null};
 `;
 
 export const PaymentButtonText = styled.Text`

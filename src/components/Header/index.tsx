@@ -6,14 +6,9 @@ import { StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../../context/CartContext";
 import { useForm, Controller } from "react-hook-form";
-import { BookObjectProps } from "../../screens/Home";
 
 interface SearchFormProps {
   search: string;
-}
-
-interface BooksItemProps {
-  item: BookObjectProps;
 }
 
 export function Header() {
@@ -113,10 +108,10 @@ export function Header() {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={CategoryList}
-        renderItem={({ item }: BooksItemProps) => {
+        renderItem={({ item }: any) => {
           return (
             <S.CategoryButton
-              key={item}
+              key={String(item)}
               onPress={() =>
                 navigate("Categories", {
                   category: item,

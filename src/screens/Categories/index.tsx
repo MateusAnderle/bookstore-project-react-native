@@ -23,7 +23,7 @@ export function Categories() {
   const route = useRoute<any>();
 
   const { category } = route.params;
-  const [data, setData] = useState({} as DataProps | null);
+  const [data, setData] = useState<any>({});
   const [isLoading, seIsLoading] = useState(true);
 
   async function fetchCategory() {
@@ -32,7 +32,7 @@ export function Categories() {
       setData(response?.data);
     } catch (error) {
       console.log(error);
-      setData(null);
+      setData({});
     } finally {
       seIsLoading(false);
     }
@@ -66,7 +66,7 @@ export function Categories() {
             }}
             data={data}
             horizontal={false}
-            keyExtractor={(item: BookObjectProps) => item.id}
+            keyExtractor={(_, index) => String(index)}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={<Footer />}
             ListEmptyComponent={
@@ -75,7 +75,7 @@ export function Categories() {
               </S.EmptyList>
             }
             numColumns={2}
-            renderItem={({ item }: BooksItemProps) => {
+            renderItem={({ item }: any) => {
               return (
                 <S.BookBox
                   onPress={() => navigate("ProductDetail", { product: item })}
